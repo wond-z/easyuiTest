@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>ValidateBox - jQuery EasyUI Demo</title>
+    <link rel="stylesheet" type="text/css" href="./themes/default/easyui.css">
+    <link rel="stylesheet" type="text/css" href="./themes/icon.css">
+    <!-- <link rel="stylesheet" type="text/css" href="../demo.css"> -->
+    <script type="text/javascript" src="./jquery.min.js"></script>
+    <script type="text/javascript" src="./jquery.easyui.min.js"></script>
+</head>
+<body>
+    <h2>Validate</h2>
+	<div style="margin:20px 0;"></div>
+	<div class="easyui-panel" title="Register" style="width:400px;padding:10px 60px 20px 60px">
+		<input id="vv">
+	</div>
+	<script type="text/javascript">
+		$(function() {
+			$('#vv').validatebox({
+				validateOnCreate: false,
+				validateOnBlur: false,
+			    required: true,
+			    validType: 'email',
+			    onValidate: function(valid) {
+			    	alert(valid)
+			    }
+			});
+
+			// 加入以下事件alert会一直弹出
+			$('#vv').validatebox('disableValidation')
+			    .focus(function () { $(this).validatebox('enableValidation'); })
+			    .blur(function () { $(this).validatebox('validate') })
+			    .keyup(function () { $(this).validatebox('validate') });
+		})
+	</script>
+	<style scoped="scoped">
+		.textbox{
+			height:20px;
+			margin:0;
+			padding:0 2px;
+			box-sizing:content-box;
+		}
+	</style>
+</body>
+</html>

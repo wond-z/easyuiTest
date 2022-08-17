@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Dynamic create Menu</title>
+    <link rel="stylesheet" type="text/css" href="./themes/default/easyui.css">
+    <link rel="stylesheet" type="text/css" href="./themes/icon.css">
+    <!-- <link rel="stylesheet" type="text/css" href="../demo.css"> -->
+    <script type="text/javascript" src="./jquery.min.js"></script>
+    <script type="text/javascript" src="./jquery.easyui.min.js"></script>
+    <style type="text/css">
+    * {
+        padding: 0;
+        margin: 0;
+    }
+
+    html,
+    body {
+        height: 100%;
+    }
+    </style>
+</head>
+
+<body>
+    <!-- <ul id="mm" class="easyui-menu" style="width:140px;"></ul> -->
+
+    <script type="text/javascript">
+        // 构建menu的dom节点
+        function buildMenus(data) {
+            if (data && data.length > 0) {
+                var node = document.createElement('div');
+                node.setAttribute('id', 'mm');
+                node.setAttribute('class', 'easyui-menu');
+                node.setAttribute('data-options', 'onClick:menuHandler');
+                node.style.width = '140px';
+
+                // 遍历数据进行dom填充
+                for (var i = 0; i < data.length; i++) {
+                    var item = document.createElement('div');
+                    item.innerText = data[i].text;
+                    item.setAttribute('data-options', 'iconCls:\'' + data[i].icon + '\'');
+                    node.appendChild(item);
+                }
+                document.body.appendChild(node);
+            }
+        }
+
+        // 点击菜单事件
+        function menuHandler(item) {
+            console.log(item);
+        }
+
+        // 右键打开菜单
+        $(document).on('contextmenu', function(e) {
+            // 阻止系统默认弹出的菜单
+            e.preventDefault();
+            // 显示菜单
+            $('#mm').menu('show', {
+                left: e.pageX,
+                top: e.pageY,
+                hideOnUnhover : false
+            });
+        });
+
+        // 定义数据
+        var data = [{
+            text: 'node1',
+            icon: 'icon-save'
+        }, {
+            text: 'node2',
+            icon: ''
+        }];
+        buildMenus(data);
+    </script>
+</body>
+
+</html>

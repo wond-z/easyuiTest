@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Basic Tree - jQuery EasyUI Demo</title>
+    <link rel="stylesheet" type="text/css" href="./themes/default/easyui.css">
+    <link rel="stylesheet" type="text/css" href="./themes/icon.css">
+    <!-- <link rel="stylesheet" type="text/css" href="../demo.css"> -->
+    <script type="text/javascript" src="./jquery.min.js"></script>
+    <script type="text/javascript" src="./jquery.easyui.min.js"></script>
+    <style type="text/css">
+    	.tree-folder, .tree-file, .tree-folder-open {
+    		display: none;
+		    width: 0px;
+		    height: 18px;
+		    margin: 4px 0;
+		    /*margin-left: -16px!important;*/
+		    vertical-align: middle;
+		    overflow: hidden;
+    	}
+    	.space {
+    		display: inline-block;
+		    width: 16px;
+		    height: 18px;
+		    margin: 4px 0;
+		    /*margin-left: -16px!important;*/
+		    vertical-align: middle;
+		    overflow: hidden;
+    	}
+    </style>
+</head>
+<body>
+	<h2>Tree Node Icons</h2>
+	<p>This sample illustrates how to add icons to tree node.</p>
+	<div style="margin:20px 0;"></div>
+	<div class="easyui-panel" style="padding:5px">
+		<ul id="tree" class="easyui-tree" data-options="url:'tree_data2.json',method:'get',animate:true"></ul>
+	</div>
+	<script type="text/javascript">
+		function remove() {
+		    // 找到 #treeBox 树形 id， 再移除图标
+		    // $('#tree').find("span.tree-icon").removeClass('tree-folder tree-folder-open tree-file').addClass('space');
+		    $('#tree').find("span.tree-icon").removeClass('tree-folder tree-folder-open tree-file');
+		    // $('#tree').find("span.tree-hit").removeClass('tree-expanded');
+		    // var icons3 = $('#tree').find("span.tree-file").removeClass('tree-file');
+		    // console.log(icons3);
+
+		    var nodes = $('#tree').find("span.tree-icon");
+		    console.log(nodes)
+		    for (var i = 0; i < nodes.length; i++) {
+		    	if (nodes[i].classList.length > 1) {
+		    		$(nodes[i]).addClass('space');
+		    	}
+		    }
+		}
+		setTimeout('remove()', 1000);
+	</script>
+</body>
+</html>

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Tabs Menu</title>
+    <link rel="stylesheet" type="text/css" href="./themes/default/easyui.css">
+    <link rel="stylesheet" type="text/css" href="./themes/icon.css">
+    <!-- <link rel="stylesheet" type="text/css" href="../demo.css"> -->
+    <script type="text/javascript" src="./jquery.min.js"></script>
+    <script type="text/javascript" src="./jquery.easyui.min.js"></script>
+    <style>
+    	.full {
+    		
+    	}
+    </style>
+</head>
+
+<body>
+    <div style="margin-bottom:10px">
+        <a href="#" class="easyui-linkbutton" onclick="addTab('google','http://www.google.com')">google</a>
+        <a href="#" class="easyui-linkbutton" onclick="addTab('jquery','http://jquery.com/')">jquery</a>
+        <a href="#" class="easyui-linkbutton" onclick="addTab('easyui','http://jeasyui.com/')">easyui</a>
+    </div>
+    <div id="tt" class="easyui-tabs" style="width:400px;height:250px;">
+        <div title="Home">
+        </div>
+    </div>
+    <script type="text/javascript">
+    function addTab(title, url) {
+        if ($('#tt').tabs('exists', title)) {
+            $('#tt').tabs('select', title);
+        } else {
+            var content = '<iframe scrolling="auto" frameborder="0" src="' + url + '" ></iframe>';
+            $('#tt').tabs('add', {
+                title: title,
+                content: content,
+                closable: true
+            });
+        }
+    }
+    </script>
+</body>
+
+</html>

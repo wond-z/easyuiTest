@@ -1,0 +1,55 @@
+button.html<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Basic Tree - jQuery EasyUI Demo</title>
+    <link rel="stylesheet" type="text/css" href="./themes/default/easyui.css">
+    <link rel="stylesheet" type="text/css" href="./themes/icon.css">
+    <!-- <link rel="stylesheet" type="text/css" href="../demo.css"> -->
+    <script type="text/javascript" src="./jquery.min.js"></script>
+    <script type="text/javascript" src="./jquery.easyui.min.js"></script>
+    <style type="text/css">
+    	.l-btn:hover {
+    		background: #fafafa;
+    		background: -webkit-linear-gradient(top,#ffffff 0,#eeeeee 100%);
+			background: -moz-linear-gradient(top,#ffffff 0,#eeeeee 100%);
+			background: -o-linear-gradient(top,#ffffff 0,#eeeeee 100%);
+			background: linear-gradient(to bottom,#ffffff 0,#eeeeee 100%);
+    		color: #444;
+			border: 1px solid #bbb;
+			filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#ffffff,endColorstr=#eeeeee,GradientType=0);
+    	}
+    	.l-btn:active {
+    		background: -webkit-linear-gradient(top,#eeeeee 0,#ffffff 100%);
+			background: -moz-linear-gradient(top,#eeeeee 0,#ffffff 100%);
+			background: -o-linear-gradient(top,#eeeeee 0,#ffffff 100%);
+			background: linear-gradient(to bottom,#eeeeee 0,#ffffff 100%);
+			filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#eeeeee,endColorstr=#ffffff,GradientType=0);
+    	}
+    	.l-btn-focus {
+    		outline: none;
+    	}
+    </style>
+</head>
+<body>
+	<h2>Basic LinkButton</h2>
+	<p><xmp>Buttons can be created from <a> or <button> elements.</xmp></p>
+	<div style="margin:10px 0 40px 0;"></div>
+	<p>Basic Buttons</p>
+	<div style="padding:5px 0;">
+		<a href="#" class="easyui-linkbutton">Add</a>
+		<a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-remove'">Remove</a>
+		<a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-save'">Save</a>
+		<a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-cut',disabled:true">Cut</a>
+		<a href="#" class="easyui-linkbutton">Text Button</a>
+	</div>
+	<p>Fixed Width Buttons</p>
+	<div style="padding:5px 0;">
+		<a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-search'" style="width:80px">Search</a>
+		<a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-print'" style="width:80px">Print</a>
+		<a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-reload'" style="width:80px">Reload</a>
+		<a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-help'" style="width:80px">Help</a>
+	</div>
+	
+</body>
+</html>

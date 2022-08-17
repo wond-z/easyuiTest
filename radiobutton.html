@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Basic Tree - jQuery EasyUI Demo</title>
+    <link rel="stylesheet" type="text/css" href="./themes/default/easyui.css">
+    <link rel="stylesheet" type="text/css" href="./themes/icon.css">
+    <!-- <link rel="stylesheet" type="text/css" href="../demo.css"> -->
+    <script type="text/javascript" src="./jquery.min.js"></script>
+    <script type="text/javascript" src="./jquery.easyui.min.js"></script>
+</head>
+<body>
+	<!-- <form id="ff">
+	    <div style="margin-bottom:20px">
+	        <input class="easyui-radiobutton" name="fruit" value="Apple" label="Apple:">
+	    </div>
+	    <div style="margin-bottom:20px">
+	        <input class="easyui-radiobutton" name="fruit" value="Orange" label="Orange:">
+	    </div>
+	    <div style="margin-bottom:20px">
+	        <input class="easyui-radiobutton" name="fruit" value="Banana" label="Banana:">
+	    </div>
+	</form> -->
+	<div id="ff"></div>
+
+	<script type="text/javascript">
+		$('#ff').radiobutton({
+			label: 'Apple',
+		    value: 'Apple',
+		    checked: true,
+			onChange: function(ov, nv) {
+		    	console.log(ov);
+		    	console.log(nv);
+		    }
+		});
+	</script>
+</body>
+</html>

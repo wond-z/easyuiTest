@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Basic Tree - jQuery EasyUI Demo</title>
+    <link rel="stylesheet" type="text/css" href="./themes/default/easyui.css">
+    <link rel="stylesheet" type="text/css" href="./themes/icon.css">
+    <!-- <link rel="stylesheet" type="text/css" href="../demo.css"> -->
+    <script type="text/javascript" src="./jquery.min.js"></script>
+    <script type="text/javascript" src="./jquery.easyui.min.js"></script>
+</head>
+<body>
+	<table id="dg"></table>
+	<script type="text/javascript">
+
+		var data = [];
+		for (var i = 1; i < 31; ++i) {
+		  data.push({
+		    "id":i,
+		    "name":"Student" + i
+		  })
+		}
+
+		$('#dg').datagrid({
+		    title: "测试本地分页",
+		    rownumbers: true,
+		    fitColumns: true,
+		    pagination: true,
+		    data: data.slice(0, 10),
+		    columns:[[
+		        {field: 'id', align: "center", title:"编号", width:100},
+		        {field: 'name', align: "center", title:"姓名", width:100}
+		    ]]
+		})
+		var pager = $('#dg').datagrid("getPager");
+		pager.pagination({
+		    total: data.length,
+		    onSelectPage: function (pageNo, pageSize) {
+		    	console.log(pageNo);
+		    	console.log(pageSize);
+		        var start = (pageNo - 1) * pageSize;
+		        var end = start + pageSize;
+		        console.log(data.slice(start, end));
+		        $("#dg").datagrid("loadData", data.slice(start, end));
+		        pager.pagination('refresh', {
+		            total: data.length,
+		            pageNumber: pageNo
+		        });
+		    }
+		});
+
+
+	</script>
+</body>
+</html>

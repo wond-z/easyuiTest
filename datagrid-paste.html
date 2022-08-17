@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<title>Datagrid 粘贴</title>
+	<link rel="stylesheet" type="text/css" href="./themes/default/easyui.css">
+	<link rel="stylesheet" type="text/css" href="./themes/icon.css">
+	<!-- <link rel="stylesheet" type="text/css" href="../demo.css"> -->
+	<script type="text/javascript" src="./jquery.min.js"></script>
+	<script type="text/javascript" src="./jquery.easyui.min.js"></script>
+	<style type="text/css">
+		/* 去除表格右侧空隙 */
+		.datagrid-btable {
+			width: 100%;
+			height: 100%;
+		}
+
+		.datagrid-htable {
+			width: 100%;
+		}
+
+		.datagrid-header-inner {
+			width: 100% !important;
+		}
+		.btn-list {
+			float: right;
+		}
+	</style>
+</head>
+
+<body>
+	<table id="dg"></table>
+	<div class="btn-list">
+		<a id="btnEdit" href="#">编辑</a>
+		<a id="btnSave" href="#">保存</a>
+	</div>
+	
+	<script type="text/javascript">
+		// 操作方法：
+		// 复制excel表格中的内容，点击编辑按钮，使表格进度编辑状态，
+		// 在页面中按ctrl+V填充数据
+
+		var data = [];
+		for (var i = 0; i < 5; ++i) {
+			data.push({
+				ALIAS: i,
+				BLOCK: "02 - BLOCK2",
+				DATE: "07/18/2021",
+				DESCRIPTION: "油过滤器后油温",
+				NODE: "001 - TRINODE001",
+				TAGNAME: "lTIAL331",
+				TIME: "19:45:50.922",
+				VARIABLE_STATE: "FALSE",
+			})
+		}
+
+
+		$('#dg').datagrid({
+			title: "粘贴excel表格中内容Demo",
+			// rownumbers: true,
+			columns: [
+				[{
+						field: 'ALIAS',
+						title: 'ALIAS',
+						width: '10%',
+						align: 'center',
+						editor: 'text'
+					},
+					{
+						field: 'TIME',
+						title: 'TIME',
+						width: '10%',
+						align: 'center',
+						editor: 'text'
+					},
+					{
+						field: 'DATE',
+						title: 'DATE',
+						width: '10%',
+						align: 'center',
+						editor: {
+							type: 'text',
+							options: {}
+						}
+					},
+					{
+						field: 'TAGNAME',
+						title: 'TAGNAME',
+						width: '10%',
+						align: 'center',
+						editor: {
+							type: 'text',
+							options: {}
+						}
+					},
+					{
+						field: 'VARIABLE_STATE',
+						title: 'VARIABLE_STATE',
+						width: '10%',
+						align: 'center',
+						editor: 'text'
+					},
+					{
+						field: 'NODE',
+						title: 'NODE',
+						width: '10%',
+						align: 'center',
+						editor: 'text'
+					},
+					{
+						field: 'BLOCK',
+						title: 'BLOCK',
+						width: '10%',
+						align: 'center',
+						editor: 'text'
+					},
+					{
+						field: 'DESCRIPTION',
+						title: 'DESCRIPTION',
+						width: '10%',
+						align: 'center',
+						editor: 'text'
+					},
+				]
+			],
+			fitColumns: true,
+			scrollbarSize: 0, // 滚动条宽度设为0
+			pagination: data.length > 10 ? true : false,
+			data: data.slice(0, 10),
+			onDblClickCell: function (index, field, value) {
+				$(this).datagrid('beginEdit', index);
+				var ed = $(this).datagrid('getEditor', {
+					index: index,
+					field: field
+				});
+				$(ed.target).focus();
+			},
+			onAfterEdit: function (index, data, changes) {
+				console.info(data);
+				$.post();
+			}
+		});
+
+		$('#btnEdit').linkbutton({
+			iconCls: 'icon-edit',
+			plain: true,
+			onClick: function () {
+				for (let i = 0; i < data.length; i++) {
+					$('#dg').datagrid('beginEdit', i);
+				}
+				
+			}
+		});
+
+		$('#btnSave').linkbutton({
+			iconCls: 'icon-save',
+			plain: true,
+			onClick: function () {
+				for (let i = 0; i < data.length; i++) {
+					$('#dg').datagrid('endEdit', i);
+				}
+			}
+		});
+
+		//绑定在了body上，也可以绑定在其他可用元素行，但是不是所有元素都支持copy和past事件。
+		$(document.body).bind({
+			// copy: function (e) { //copy事件
+			// 	var cpTxt = "复制的数据";
+			// 	var clipboardData = window.clipboardData; //for IE
+			// 	if (!clipboardData) { // for chrome
+			// 		clipboardData = e.originalEvent.clipboardData;
+			// 	}
+			// 	//e.clipboardData.getData('text');//可以获取用户选中复制的数据
+			// 	clipboardData.setData('Text', cpTxt);
+			// 	// alert(cpTxt);
+			// 	// $('#message').text('Copy Data : ' + cpTxt);
+			// 	return false; //否则设不生效
+			// },
+			// paste事件
+			paste: function (e) {
+				var data = null;
+				var clipboardData = window.clipboardData; // IE
+				if (!clipboardData) { // chrome
+					clipboardData = e.originalEvent.clipboardData
+				}
+				// debugger;
+				data = clipboardData.getData('Text');
+				console.log(clipboardData)
+				console.log(data)
+
+				// 解析粘贴板中的文本内容
+				var dataList = data.replace(/\r\n/g, '\t').split('\t');
+				console.log(dataList)
+				for (let i = 0; i < dataList.length; i++) {
+					const element = dataList[i];
+					$($('input.datagrid-editable-input')[i]).val(element);
+				}
+
+			}
+		});
+
+	</script>
+</body>
+
+</html>

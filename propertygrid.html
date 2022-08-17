@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Propertygrid Combobox - jQuery EasyUI Demo</title>
+    <link rel="stylesheet" type="text/css" href="./themes/default/easyui.css">
+    <link rel="stylesheet" type="text/css" href="./themes/icon.css">
+    <!-- <link rel="stylesheet" type="text/css" href="../demo.css"> -->
+    <script type="text/javascript" src="./jquery.min.js"></script>
+    <script type="text/javascript" src="./jquery.easyui.min.js"></script>
+</head>
+<body>
+	<table id="pg" style="width:300px"></table>
+	<script type="text/javascript">
+
+		function getComboboxLabelByValue(value, optionData) {
+			if (optionData.length > 0) {
+				for (var i = 0; i < optionData.length; i++) {
+					if (value === optionData[i].value) {
+						return optionData[i].label;
+					}
+				}
+			}
+			return value;
+		}
+
+		$('#pg').propertygrid({
+		    data: {
+		    	"total": 4,
+		    	"rows":[
+				    {"name":"Name","value":"Bill Smith","group":"ID Settings","editor":"text"},
+				    {"name":"Address","value":"","group":"ID Settings","editor":"text"},
+				    {"name":"SSN","value":"123-456-7890","group":"ID Settings","editor":"text"},
+				    {"name":"Email","value":"bill@gmail.com","group":"Marketing Settings","editor":{
+				        "type":"validatebox",
+				        "options":{
+				            "validType":"email"
+				        }
+				    }},
+				    {
+		                "name": "所属大区",
+		                "value": "1",
+		                "editor": {
+		                    "type": "combobox",
+		                    "options": {
+		                        "valueField": 'value',
+		                        "textField": 'label',
+		                        "data": [
+		                            { "label": '华东', "value": "1" },
+		                            { "label": '华南', "value": "华南" },
+		                            { "label": '华中', "value": "华中" },
+		                            { "label": '华北', "value": "华北" },
+		                            { "label": '西北', "value": "西北" },
+		                            { "label": '西南', "value": "西南" },
+		                            { "label": '东北', "value": "东北" }
+		                        ]
+		                    }
+		                }
+		            }
+				]
+		    },
+		    showGroup: false,
+		    scrollbarSize: 0,
+		    columns:[[
+			    { field: 'name', title: 'Name', width: 100, sortable: true },
+			    { 
+         			field: 'value',
+         			title: 'Value',
+         			width: 200,
+				    formatter: function(value, rowData, rowIndex) {
+				    	console.log(value)
+				    	console.log(rowData)
+				    	console.log(rowIndex)
+						switch(rowData.name) {
+			 				case '所属大区':
+			 					return getComboboxLabelByValue(value, rowData.editor.options.data);
+			 				case 'type':
+			 					return getDictNameByVal(value, 'member_type');
+			 				case 'source':
+			 					return getDictNameByVal(value, rowData.field);
+			 				default:
+			 					return value;
+			 			}
+				    }
+				}
+			]]
+		});
+	</script>
+</body>
+</html>

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>tree-select</title>
+	<link rel="stylesheet" type="text/css" href="./themes/default/easyui.css">
+    <link rel="stylesheet" type="text/css" href="./themes/icon.css">
+    <!-- <link rel="stylesheet" type="text/css" href="../demo.css"> -->
+    <script type="text/javascript" src="./jquery.min.js"></script>
+    <script type="text/javascript" src="./jquery.easyui.min.js"></script>
+</head>
+<body>
+	<div id="tt"></div>
+	<script type="text/javascript">
+		$('#tt').tree({
+		    data: [{
+		        text: 'Item1',
+		        state: 'closed',
+		        children: [{
+		            text: 'Item11'
+		        },{
+		            text: 'Item12'
+		        }]
+		    },{
+		        text: 'Item2'
+		    }]
+		});
+	</script>
+</body>
+</html>

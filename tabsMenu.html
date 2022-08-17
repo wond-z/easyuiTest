@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Tabs Menu</title>
+    <link rel="stylesheet" type="text/css" href="./themes/default/easyui.css">
+    <link rel="stylesheet" type="text/css" href="./themes/icon.css">
+    <!-- <link rel="stylesheet" type="text/css" href="../demo.css"> -->
+    <script type="text/javascript" src="./jquery.min.js"></script>
+    <script type="text/javascript" src="./jquery.easyui.min.js"></script>
+</head>
+<body>
+    <h2>Tabs Menu</h2>
+    <div id="tt" class="easyui-tabs" style="width:500px;height:250px;">
+        <div title="Tab1" style="padding:20px;display:none;">
+            tab1
+        </div>
+        <div title="Tab2" data-options="closable:true" style="overflow:auto;padding:20px;display:none;">
+            tab2
+        </div>
+        <div title="Tab3" data-options="iconCls:'icon-reload',closable:true" style="padding:20px;display:none;">
+            tab3
+        </div>
+    </div>
+    <div id="contextMenu_jygl" class="easyui-menu" style="width: 80px; display: none;">              
+        <div id="btn_More" data-options="iconCls:'icon-ok'" οnclick="tips(123)">关闭当前</div>
+        <div id="Pass" data-options="iconCls:'icon-remove'" οnclick="tips()">关闭所有</div>
+    </div>
+    <script type="text/javascript">
+        var preventDefault = function(e) {
+            e = e || window.event;
+            if (e.preventDefault) {
+                e.preventDefault();
+            } else {
+                e.returnValue = false;
+            }
+        };
+        
+        $('#tt').tabs({
+            border:false,
+            onSelect:function(title){
+                console.log(title+' is selected');
+            },
+            onContextMenu: function (e, title, index) {
+                preventDefault();
+                console.log(e)
+                console.log(title)
+                console.log(index)
+                $('#contextMenu_jygl').menu('show', {                        
+                    left: e.pageX, //在鼠标点击处显示菜单
+                    top: e.pageY
+                });
+            }
+        });
+
+        function tips(time) {
+            alert(time);
+        }
+    </script>
+</body>
+</html>
