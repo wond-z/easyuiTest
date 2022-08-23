@@ -10,161 +10,162 @@
 <body>
     <div id="datalist"></div>
     <script type="text/javascript">
-        var data = [
-            {
-                id: 1,
-                title1: '企业负责人',
-                title2: '企业负责人',
-                zgzname: '矿长资格证',
-                rowdata1: 'dd'
-            },
-            {
-                id: 2,
-                title1: '企业负责人',
-                title2: 'a2',
-                zgzname: '管理人员资格证',
-                rowdata1: 'dd'
-            },
-            {
-                id: 3,
-                title1: '安全生产管理人员',
-                title2: 'A类',
-                zgzname: 'cc',
-                rowdata1: 'dd'
-            },
-            {
-                id: 4,
-                title1: '安全生产管理人员',
-                title2: 'A类',
-                zgzname: 'cc',
-                rowdata1: 'dd'
-            },
-            {
-                id: 5,
-                title1: '安全生产管理人员',
-                title2: 'B类',
-                zgzname: 'cc',
-                rowdata1: 'dd'
-            },
-            {
-                id: 6,
-                title1: '安全生产管理人员',
-                title2: 'B类',
-                zgzname: 'cc',
-                rowdata1: 'dd'
-            },
-            {
-                id: 7,
-                title1: '流水线人员',
-                title2: 'C类',
-                zgzname: 'cc',
-                rowdata1: 'dd'
-            }
-        ];
-        // $(function () {});是$(document).ready(function () { })的简写，
-        // 最早接触的时候也说$(document).ready(function () { })这个函数是用来取代页面中的window.onload;但是今天发现 好像不是这样回事！
-        // $(document).ready () 里的代码是在页面内容都加载完才执行的，如果把代码直接写到script标签里，
-        // 当页面加载完这个script标签就会执行里边的代码了，此时如果你标签里执行的代码调用了当前还没加载过来的代码或者dom，那么就会报错，
-        // 当然如果你把script标签放到页面最后面那么就没问题了，此时和ready效果一样。
-        $(function () {
-            $('#datalist').datagrid({
-                title: '三项岗位人员统计',
-                iconCls: 'icon-save',
-                singleSelect: true,
-                nowrap: false,
-                fit: true,
-                striped: false,
-                data: data,
-                remoteSort: false,
-                idField: 'DicQualificationID', // 指示哪个字段是标识字段
-                columns: [
-                    [
-                        { title: '名称', colspan: 2},
-                        { field: 'zgzname', title: '资格证名称', width: 120, align: 'center', 'rowspan': 2 },
-                        { field: 'rowdata1', title: '资格类型', width: 120, align: 'center', 'rowspan': 2 }
-
-                    ],
-                    [
-                        { field: 'title1', title: '资格证名称', width: 120, align: 'center' },
-                        { field: 'title2', title: '资格类型', width: 120, align: 'center' }
-                    ]
+    var data = [
+        {
+            id: 1,
+            title1: '企业负责人',
+            title2: '企业负责人',
+            zgzname: '矿长资格证',
+            rowdata1: 'dd'
+        },
+        {
+            id: 2,
+            title1: '企业负责人',
+            title2: 'a2',
+            zgzname: '管理人员资格证',
+            rowdata1: 'dd'
+        },
+        {
+            id: 3,
+            title1: '安全生产管理人员',
+            title2: 'A类',
+            zgzname: 'cc',
+            rowdata1: 'dd'
+        },
+        {
+            id: 4,
+            title1: '安全生产管理人员',
+            title2: 'A类',
+            zgzname: 'cc',
+            rowdata1: 'dd'
+        },
+        {
+            id: 5,
+            title1: '安全生产管理人员',
+            title2: 'B类',
+            zgzname: 'cc',
+            rowdata1: 'dd'
+        },
+        {
+            id: 6,
+            title1: '安全生产管理人员',
+            title2: 'B类',
+            zgzname: 'cc',
+            rowdata1: 'dd'
+        },
+        {
+            id: 7,
+            title1: '流水线人员',
+            title2: 'C类',
+            zgzname: 'cc',
+            rowdata1: 'dd'
+        }
+    ];
+    // $(function () {});是$(document).ready(function () { })的简写，
+    // 最早接触的时候也说$(document).ready(function () { })这个函数是用来取代页面中的window.onload;但是今天发现 好像不是这样回事！
+    // $(document).ready () 里的代码是在页面内容都加载完才执行的，如果把代码直接写到script标签里，
+    // 当页面加载完这个script标签就会执行里边的代码了，此时如果你标签里执行的代码调用了当前还没加载过来的代码或者dom，那么就会报错，
+    // 当然如果你把script标签放到页面最后面那么就没问题了，此时和ready效果一样。
+    $(function () {
+        $('#datalist').datagrid({
+            title: '人员统计', // [继承panel]显示在面板（panel）头部的标题文字
+            iconCls: 'icon-save', // [继承panel]在面板（panel）里显示一个 16x16 图标的 CSS class
+            fit: false, // [继承panel]当设置为 true 时，面板（panel）的尺寸就适应它的父容器
+            width: 700, // [继承panel]
+            // height: 350, // [继承panel]
+            singleSelect: true, // 设置为 true，则只允许选中一行。
+            striped: false, // 设置为 true，则把行条纹化。（即奇偶行使用不同背景色）
+            nowrap: false, // 设置为 true，则把数据显示在一行里。设置为 true 可提高加载性能
+            idField: 'id', // 指示哪个字段是标识字段
+            // url: '', // 从远程站点请求数据的 URL
+            data: data, // 要加载的数据
+            remoteSort: false, // 定义是否从服务器排序数据
+            columns: [
+                [
+                    { title: '名称', colspan: 2},
+                    { field: 'zgzname', title: '证书', width: 150, align: 'center', 'rowspan': 2 },
+                    { field: 'rowdata1', title: '标准', width: 150, align: 'center', 'rowspan': 2 }
                 ],
-                rownumbers: true, // 显示行号
-                onLoadSuccess: function (rowData) {
-                    // 定义要合并的单元格
-                    var merges2 = [
-                        {
-                            index: 0,
-                            field: 'title1',
-                            colspan: 2,
-                            rowspan: 2
-                        },
-                        {
-                            index: 2,
-                            field: 'title1',
-                            rowspan:4
-                        },
-                        {
-                            index: 2,
-                            field: 'title2',
-                            rowspan: 2
-                        },
-                        {
-                            index: 4,
-                            field: 'title2',
-                            rowspan: 2
-                        },
-                        {
-                            index: 0,
-                            field: 'rowdata1',
-                            rowspan: 7
-                        }
-                    ];
+                [
+                    { field: 'title1', title: '资格证名称', width: 150, align: 'center' },
+                    { field: 'title2', title: '资格类型', width: 210, align: 'center' }
+                ]
+            ],
+            rownumbers: true, // 显示行号
+            onLoadSuccess: function (rowData) { // 当数据加载成功时触发
+                // 定义要合并的单元格
+                var merges2 = [
+                    {
+                        index: 0,
+                        field: 'title1',
+                        colspan: 2,
+                        rowspan: 2
+                    },
+                    {
+                        index: 2,
+                        field: 'title1',
+                        rowspan:4
+                    },
+                    {
+                        index: 2,
+                        field: 'title2',
+                        rowspan: 2
+                    },
+                    {
+                        index: 4,
+                        field: 'title2',
+                        rowspan: 2
+                    },
+                    {
+                        index: 0,
+                        field: 'rowdata1',
+                        rowspan: 7
+                    }
+                ];
 
-                    /*
-                    options {
-                        index：列的索引。
-                        field：字段名。
-                        rowspan：合并跨越的行数。
-                        colspan：合并跨越的列数。
-                    }
-                    */
-                    // 合并单元格
-                    for (var i = 0; i < merges2.length; i++) {
-                        $('#datalist').datagrid('mergeCells', {
-                            index: merges2[i].index,
-                            field: merges2[i].field,
-                            colspan: merges2[i].colspan,
-                            rowspan: merges2[i].rowspan
-                        });
-                    }
-                },
-                toolbar: [{
-                    id: 'btnadd',
-                    text: '添加',
-                    iconCls: 'icon-add',
-                    handler: function () {
-                        DicAdd()
-                    }
-                }, '-', {
-                    id: 'btncut',
-                    text: '修改',
-                    iconCls: 'icon-cut',
-                    handler: function () {
-                        DicEdit()
-                    }
-                }, '-', {
-                    id: 'btnsave',
-                    text: '删除',
+                /*
+                options {
+                    index：行的索引（注意：文档说明以官方英文文档为准，地址：http://jeasyui.com/documentation/index.php）
+                    field：字段名。
+                    rowspan：合并跨越的行数。
+                    colspan：合并跨越的列数。
+                }
+                */
+                // 合并单元格
+                for (var i = 0; i < merges2.length; i++) {
+                    $('#datalist').datagrid('mergeCells', {
+                        index: merges2[i].index,
+                        field: merges2[i].field,
+                        colspan: merges2[i].colspan,
+                        rowspan: merges2[i].rowspan
+                    });
+                }
+            },
+            toolbar: [{
+                id: 'btnadd',
+                text: '添加',
+                iconCls: 'icon-add',
+                handler: function () {
+                    console.log('addData')
+                }
+            }, '-', {
+                id: 'btncut',
+                text: '修改',
+                iconCls: 'icon-cut',
+                handler: function () {
+                    console.log('updateData')
+                }
+            }, '-', {
+                id: 'btnsave',
+                text: '删除',
 
-                    iconCls: 'icon-remove',
-                    handler: function () {
-                        delData();
-                    }
-                }]
-            });
-
+                iconCls: 'icon-remove',
+                handler: function () {
+                    console.log('delData')
+                }
+            }]
         });
+    });
     </script>
 </body>
 </html>
