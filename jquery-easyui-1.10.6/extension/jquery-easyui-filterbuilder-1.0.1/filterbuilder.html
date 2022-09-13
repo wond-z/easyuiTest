@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>jQuery EasyUI Demo</title>
+	<link rel="stylesheet" type="text/css" href="../../themes/default/easyui.css">
+	<link rel="stylesheet" type="text/css" href="../../themes/icon.css">
+	<script type="text/javascript" src="../../jquery.min.js"></script>
+	<script type="text/javascript" src="../../jquery.easyui.min.js"></script>
+	<script type="text/javascript" src="jquery.filterbuilder.js"></script>
+	<style>
+		.fb-tree .fb-field{
+			background: #286090;
+			color: #fff;
+		}
+		.fb-tree .fb-group-op{
+			background: #c9302c;
+			color: #fff;
+		}
+		.fb-tree .fb-op{
+			background: #4cae4c;
+			color: #fff;
+		}
+	</style>
+	<script>
+		$(function(){
+			$('#fb').filterbuilder({
+				rules: [{
+					op: 'and',
+					children: [{
+						field: 'name',
+						op: 'contains',
+						value: 'fb'
+					},{
+						field: 'invoice',
+						op: 'greater',
+						value: 'inv001'
+					},{
+						op: 'or',
+						children: [{
+							field: 'category',
+							op: 'equal',
+							value: 'c1'
+						}]
+					}]
+				}],
+				fields: [
+					{field:'name',title:'Name'},
+					{field:'invoice',title:'Invoice Number'},
+					{field:'category',title:'Category',
+						operators: [
+							{op:'equal',text:'Equal',editor:{
+								type:'combobox',
+								options:{
+									editable:false,
+									data:[{value:'c1',text:'Category1'},{value:'c2',text:'Category2'}]
+								}
+							}},
+							{op:'notequal',text:'Not Equal',editor:{
+								type:'combobox',
+								options:{
+									editable:false,
+									data:[{value:'c1',text:'Category1'},{value:'c2',text:'Category2'}]
+								}
+							}}
+						]
+					}
+				]
+			})
+		});
+		function getrules(){
+			var rules = $('#fb').filterbuilder('getRules');
+			alert(JSON.stringify(rules))
+		}
+	</script>
+</head>
+<body>
+	<h1>Filter Builder</h1>
+	
+	<a href="javascript:;" class="easyui-linkbutton" onclick="getrules()">Get Rules</a>
+	<div class="easyui-panel" style="width:700px;padding:10px 10px 10px 0">
+		<ul id="fb"></div>
+	</div>
+	</body>
+</html>
