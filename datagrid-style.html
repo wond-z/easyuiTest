@@ -12,11 +12,15 @@
 <body>
 	<table id="dg"></table>
 	<script type="text/javascript">
+		function random(min, max) {
+            return Math.floor(Math.random() * (max - min)) + min;
+        }
 
 		var data = [];
 		for (var i = 1; i < 31; ++i) {
 		  data.push({
-		    "id":i,
+			"colorCell": random(1, 100),
+		    "id": i,
 		    "name":"Student" + i
 		  })
 		}
@@ -24,15 +28,28 @@
 		$('#dg').datagrid({
 		    title: "测试本地分页",
 		    rownumbers: true,
-		    fitColumns: true,
+		    // fitColumns: true,
 		    pagination: true,
 		    data: data.slice(0, 10),
 		    columns:[[
-		        {field: 'id', align: "center", title:"编号", width:100},
-		        {field: 'name', align: "center", title:"姓名", width:100}
+				{field: 'colorCell', align: "center", title: "颜色", width: '10%', styler: function(val, row, index) { // 修改单元格样式
+					if (val < 50) {
+						return 'background:#B9F3B9';
+					} else {
+						return 'background:#FFCCCC';
+					}
+				}, formatter: function(val, row, index) { // 修改单元格格式
+					return '';
+				}},
+		        {field: 'id', align: "center", title:"编号", width: '50%', formatter: function(val, row, index) { // 修改单元格格式
+					return 'list' + val;
+				}},
+		        {field: 'name', align: "center", title:"姓名", width: '40%'}
 		    ]],
-		    rowStyler: function(index,row){
-					return 'font-size:50px;background-color:#6293BB;color:#fff;';
+		    rowStyler: function(index, row) { // 修改行样式
+				if (index % 2) {
+					return 'font-size:50px; background-color:#6293BB; color:#fff;';
+				}
 			}
 		})
 
@@ -41,11 +58,8 @@
 		pager.pagination({
 		    total: data.length,
 		    onSelectPage: function (pageNo, pageSize) {
-		    	console.log(pageNo);
-		    	console.log(pageSize);
 		        var start = (pageNo - 1) * pageSize;
 		        var end = start + pageSize;
-		        console.log(data.slice(start, end));
 		        $("#dg").datagrid("loadData", data.slice(start, end));
 		        pager.pagination('refresh', {
 		            total: data.length,
