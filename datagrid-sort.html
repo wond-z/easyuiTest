@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Datagrid 复选框</title>
+    <link rel="stylesheet" type="text/css" href="./themes/default/easyui.css">
+    <link rel="stylesheet" type="text/css" href="./themes/icon.css">
+    <!-- <link rel="stylesheet" type="text/css" href="../demo.css"> -->
+    <script type="text/javascript" src="./jquery.min.js"></script>
+    <script type="text/javascript" src="./jquery.easyui.min.js"></script>
+    <style type="text/css">
+    	/* 去除表格右侧空隙 */
+    	.datagrid-btable{
+		    width: 100%;
+		    height: 100%;
+		}
+		.datagrid-htable{
+		     width: 100%;
+		}
+		.datagrid-header-inner{
+		    width: 100% !important;
+		}
+    </style>
+</head>
+<body>
+	<table id="dg"></table>
+	<script type="text/javascript">
+        function getFormtTime(dateTime, flag) {
+            if (dateTime != null ) {
+                //若传入的dateTime为字符串类型，需要进行转换成数值，若不是无需下面注释代码
+                //var time = parseInt(dateTime)
+                var date = new Date(dateTime);
+                //获取年份
+                var YY = date.getFullYear();
+                //获取月份
+                var MM = (date.getMonth() + 1 < 10 ? '0'+ (date.getMonth() + 1) : date.getMonth() + 1);
+                //获取日期
+                var DD = (date.getDate() < 10 ? '0'+date.getDate() : date.getDate());
+                if(flag) { //flag为true，显示时分秒格式
+                    //获取小时
+                    var hh = (date.getHours() < 10 ? '0'+date.getHours() : date.getHours());
+                    //获取分
+                    var mm = (date.getMinutes() < 10 ? '0'+date.getMinutes() : date.getMinutes());
+                    ///获取秒
+                    var ss = (date.getSeconds() < 10 ? '0'+date.getSeconds() : date.getSeconds());
+                    //返回时间格式： 2020-11-09 13:14:52
+                    return YY + '-' + MM + '-' + DD + ' ' + hh + ':' + mm + ':' + ss;
+                } else {
+                    //返回时间格式： 2020-11-09
+                    return YY + '-' + MM + '-' + DD;
+                }
+            } else {
+                return "";
+            }
+        }
+
+        function random(min, max) {
+            return Math.floor(Math.random() * (max - min)) + min;
+        }
+
+		var data = [];
+		for (var i = 0; i < 44; ++i) {
+		  data.push({
+		    ALIAS: i,
+			BLOCK: "02 - BLOCK2",
+			DATE: new Date('202' + random(0, 9).toString() + '-0' + random(1, 9).toString() + '-23 15:23:15').getTime(),
+			DESCRIPTION: "油过滤器后油温",
+			GROUP1: random(1, 100),
+			GROUP2: "",
+			NODE: "001 - TRINODE001",
+			TAGNAME: "lTIAL331",
+			TIME: "19:45:50.922",
+			VARIABLE_STATE: "FALSE",
+		  })
+		}
+
+		$('#dg').datagrid({
+		    columns:[[
+                { field: 'ck', checkbox: true },
+		        // { field: 'DATE', title: 'DATE', width: '10%' ,align: 'center', sortable: true, sorter: function(a, b) {
+                //     var date1 = new Date(a);
+                //     var time1 = date1.getTime();
+                //     var date2 = new Date(a);
+                //     var time2 = date2.getTime();
+                //     console.log(time1)
+                //     console.log(time2)
+                //     return time1 > time2 ? 1 : -1;
+                // }},
+                { field: 'DATE', title: 'DATE', width: '10%' ,align: 'center', sortable: true, formatter: function(val, row, index) {
+					// return new Date(val).getTime();
+                    return getFormtTime(val, true);
+
+				}},
+				{ field: 'TIME', title: 'TIME', width: '10%' ,align: 'center'},
+				{ field: 'ALIAS', title: 'ALIAS', width: '5%' ,align: 'center' },
+				{ field: 'TAGNAME', title: 'TAGNAME', width: '10%',align: 'center'  },
+				{ field: 'VARIABLE_STATE', title: 'VARIABLE_STATE', width: '10%' ,align: 'center' },
+				{ field: 'NODE', title: 'NODE', width: '10%' ,align: 'center' },
+				{ field: 'BLOCK', title: 'BLOCK', width: '10%' ,align: 'center' },
+				{ field: 'GROUP1', title: 'GROUP1', width: '10%' ,align: 'center' },
+				{ field: 'GROUP2', title: 'GROUP2', width: '10%' ,align: 'center' },
+				{ field: 'DESCRIPTION', title: 'DESCRIPTION', width: '10%' ,align: 'center' },
+		    ]],
+            remoteSort: false,
+            fitColumns: true,
+		    scrollbarSize: 0, // 滚动条宽度设为0
+		    pagination: true,
+		    data: data.slice(0, 10),
+            onCheck: function(rowIndex, rowData) {
+                console.log(rowData);
+                if (rowData.GROUP1 < 50) {
+                    $.messager.confirm('Confirm','GROUP1 数据小于50?', function(r) {
+                        if (r) {
+                            $('#dg').datagrid('uncheckRow', rowIndex);
+                        }
+                    }); 
+                }
+            }
+		});
+
+		var pager = $('#dg').datagrid("getPager");
+		pager.pagination({
+		    total: data.length,
+		    onSelectPage: function (pageNo, pageSize) {
+		        var start = (pageNo - 1) * pageSize;
+		        var end = start + pageSize;
+		        console.log(data.slice(start, end));
+		        $("#dg").datagrid("loadData", data.slice(start, end));
+		        pager.pagination('refresh', {
+		            total: data.length,
+		            pageNumber: pageNo
+		        });
+		    }
+		});
+	</script>
+</body>
+</html>
