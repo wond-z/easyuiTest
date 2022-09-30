@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Datagrid 复选框</title>
+    <link rel="stylesheet" type="text/css" href="./themes/default/easyui.css">
+    <link rel="stylesheet" type="text/css" href="./themes/icon.css">
+    <!-- <link rel="stylesheet" type="text/css" href="../demo.css"> -->
+    <script type="text/javascript" src="./jquery.min.js"></script>
+    <script type="text/javascript" src="./jquery.easyui.min.js"></script>
+    <style type="text/css">
+    	/* 去除表格右侧空隙 */
+    	.datagrid-btable{
+		    width: 100%;
+		    height: 100%;
+		}
+		.datagrid-htable{
+		     width: 100%;
+		}
+		.datagrid-header-inner{
+		    width: 100% !important;
+		}
+    </style>
+</head>
+<body>
+	<table id="dg"></table>
+	<script type="text/javascript">
+        function random(min, max) {
+            return Math.floor(Math.random() * (max - min)) + min;
+        }
+
+		var data = [];
+		for (var i = 0; i < 44; ++i) {
+		  data.push({
+		    ALIAS: i,
+			BLOCK: "02 - BLOCK2",
+			DATE: "07/18/2021",
+			DESCRIPTION: "油过滤器后油温",
+			GROUP1: random(1, 100),
+			GROUP2: "",
+			NODE: "001 - TRINODE001",
+			TAGNAME: "lTIAL331",
+			TIME: "19:45:50.922",
+			VARIABLE_STATE: "FALSE",
+		  })
+		}
+
+		$('#dg').datagrid({
+		    columns:[[
+                { field: 'ck', checkbox: true },
+		        { field: 'DATE', title: 'DATE', width: '10%' ,align: 'center' },
+				{ field: 'TIME', title: 'TIME', width: '10%' ,align: 'center' },
+				{ field: 'ALIAS', title: 'ALIAS', width: '10%' ,align: 'center' },
+				{ field: 'TAGNAME', title: 'TAGNAME', width: '10%',align: 'center'  },
+				{ field: 'VARIABLE_STATE', title: 'VARIABLE_STATE', width: '10%' ,align: 'center' },
+				{ field: 'NODE', title: 'NODE', width: '10%' ,align: 'center' },
+				{ field: 'BLOCK', title: 'BLOCK', width: '10%' ,align: 'center' },
+				{ field: 'GROUP1', title: 'GROUP1', width: '10%' ,align: 'center' },
+				{ field: 'GROUP2', title: 'GROUP2', width: '10%' ,align: 'center' },
+				{ field: 'DESCRIPTION', title: 'DESCRIPTION', width: '10%' ,align: 'center' },
+		    ]],
+            fitColumns: true,
+		    scrollbarSize: 0, // 滚动条宽度设为0
+		    pagination: true,
+		    data: data.slice(0, 10),
+            onCheck: function(rowIndex, rowData) {
+                console.log(rowData);
+                if (rowData.GROUP1 < 50) {
+                    $.messager.confirm('Confirm','GROUP1 数据小于50?', function(r) {
+                        if (r) {
+                            $('#dg').datagrid('uncheckRow', rowIndex);
+                        }
+                    }); 
+                }
+            }
+		});
+
+		var pager = $('#dg').datagrid("getPager");
+		pager.pagination({
+		    total: data.length,
+		    onSelectPage: function (pageNo, pageSize) {
+		        var start = (pageNo - 1) * pageSize;
+		        var end = start + pageSize;
+		        console.log(data.slice(start, end));
+		        $("#dg").datagrid("loadData", data.slice(start, end));
+		        pager.pagination('refresh', {
+		            total: data.length,
+		            pageNumber: pageNo
+		        });
+		    }
+		});
+	</script>
+</body>
+</html>
