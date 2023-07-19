@@ -27,29 +27,54 @@
 		    fitColumns: true,
 		    pagination: true,
 		    data: data.slice(0, 10),
+			remoteSort: false,
+			
 		    columns:[[
-		        {field: 'id', align: "center", title:"编号", width:100},
-		        {field: 'name', align: "center", title:"姓名", width:100}
-		    ]]
+		        {field: 'id', align: "center", title:"编号", width: 100, sortable: true,
+					sorter: function(a, b) {
+						console.log(a, b)
+						return a > b ? 1 : -1
+					}
+				},
+		        {field: 'name', align: "center", title:"姓名", width: 100}
+		    ]],
+			onBeforeSortColumn: function(sort, order) {
+                // datagrid排序前把全部数据加载进去
+                $("#dg").datagrid("loadData", data); 
+			},
+			onSortColumn: function (sort, order) {
+                // datagrid排序后记录已排序的数据并显示第一页数据
+                data = $("#dg").datagrid("getData").rows;
+                setPage(1);
+            }
 		})
 		var pager = $('#dg').datagrid("getPager");
 		pager.pagination({
 		    total: data.length,
-		    onSelectPage: function (pageNo, pageSize) {
-		    	console.log(pageNo);
-		    	console.log(pageSize);
-		        var start = (pageNo - 1) * pageSize;
-		        var end = start + pageSize;
-		        console.log(data.slice(start, end));
-		        $("#dg").datagrid("loadData", data.slice(start, end));
-		        pager.pagination('refresh', {
-		            total: data.length,
-		            pageNumber: pageNo
-		        });
-		    }
+		    // onSelectPage: function (pageNo, pageSize) {
+		    //     var start = (pageNo - 1) * pageSize;
+		    //     var end = start + pageSize;
+		    //     $("#dg").datagrid("loadData", data.slice(start, end));
+		    //     pager.pagination('refresh', {
+		    //         total: data.length,
+		    //         pageNumber: pageNo
+		    //     });
+		    // }
+			onSelectPage: setPage
 		});
 
-
+		//设置页数并显示对应页数的数据
+		function setPage(pageNo) {
+			var pager = $("#dg").datagrid("getPager");
+			var pageSize = $("#dg").datagrid('options').pageSize;
+			var start = (pageNo - 1) * pageSize;
+			var end = start + pageSize;
+			$("#dg").datagrid("loadData", data.slice(start, end));
+			pager.pagination('refresh', {
+				total: data.length,
+				pageNumber: pageNo
+        	});
+		}
 	</script>
 </body>
 </html>
