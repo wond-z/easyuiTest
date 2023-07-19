@@ -32,7 +32,7 @@
                 var node = document.createElement('div');
                 node.setAttribute('id', 'mm');
                 node.setAttribute('class', 'easyui-menu');
-                node.setAttribute('data-options', 'onClick:menuHandler');
+                // node.setAttribute('data-options', 'onClick:menuHandler');
                 node.style.width = '140px';
 
                 // 遍历数据进行dom填充
@@ -46,22 +46,21 @@
             }
         }
 
-        // 点击菜单事件
-        function menuHandler(item) {
-            console.log(item);
-        }
-
-        // 右键打开菜单
-        $(document).on('contextmenu', function(e) {
-            // 阻止系统默认弹出的菜单
-            e.preventDefault();
-            // 显示菜单
-            $('#mm').menu('show', {
-                left: e.pageX,
-                top: e.pageY,
-                hideOnUnhover : false
-            });
-        });
+        // var html = `<div id="mm" class="easyui-menu" style="width:120px;">
+        //     <div>New</div>
+        //     <div>
+        //         <span>Open</span>
+        //         <div style="width:150px;">
+        //             <div><b>Word</b></div>
+        //             <div>Excel</div>
+        //             <div>PowerPoint</div>
+        //         </div>
+        //     </div>
+        //     <div data-options="iconCls:'icon-save'">Save</div>
+        //     <div class="menu-sep"></div>
+        //     <div>Exit</div>
+        // </div>`;
+        // $('body').append(html);
 
         // 定义数据
         var data = [{
@@ -72,6 +71,21 @@
             icon: ''
         }];
         buildMenus(data);
+
+        // 右键打开菜单
+        $(document).on('contextmenu', function(e) {
+            // 阻止系统默认弹出的菜单
+            e.preventDefault();
+            // 显示菜单
+            $('#mm').menu('show', {
+                left: e.pageX,
+                top: e.pageY,
+                hideOnUnhover : false,
+                onClick: function(item) {
+                    console.log(item);
+                }
+            });
+        });
     </script>
 </body>
 
