@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Datagrid 5000条数据测试</title>
+    <link rel="stylesheet" type="text/css" href="./themes/default/easyui.css">
+    <link rel="stylesheet" type="text/css" href="./themes/icon.css">
+    <script type="text/javascript" src="./js/jquery.min.js"></script>
+    <script type="text/javascript" src="./js/jquery.easyui.min.js"></script>
+    <script type="text/javascript" src="./js/jquery.print.js"></script>
+    <style type="text/css">
+    	/* 去除表格右侧空隙 */
+    	.datagrid-btable{
+		    width: 100%;
+		    height: 100%;
+		}
+		.datagrid-htable{
+		     width: 100%;
+		}
+		.datagrid-header-inner{
+		    width: 100% !important;
+		}
+		
+		.datagrid-row {
+			height: 42px;
+			text-align:center;
+		}
+    </style>
+</head>
+<body>
+    <button id="print">打印表格</button>
+	<table id="dg"></table>
+	<script type="text/javascript">
+		var data = [];
+		for (var i = 0; i < 500; ++i) {
+		  data.push({
+		    ALIAS: i,
+			BLOCK: "02 - BLOCK2",
+			DATE: "07/18/2021",
+			DESCRIPTION: "油过滤器后油温",
+			GROUP1: "",
+			GROUP2: "",
+			NODE: "001 - TRINODE001",
+			TAGNAME: "lTIAL331",
+			TIME: "19:45:50.922",
+			VARIABLE_STATE: "FALSE",
+		  })
+		}
+
+		$('#dg').datagrid({
+		    columns:[[
+		        { field: 'DATE', title: 'DATE', width: '10%' ,align: 'center' },
+				{ field: 'TIME', title: 'TIME', width: '10%' ,align: 'center' },
+				{ field: 'ALIAS', title: 'ALIAS', width: '10%' ,align: 'center' },
+				{ field: 'TAGNAME', title: 'TAGNAME', width: '10%',align: 'center'  },
+				{ field: 'VARIABLE_STATE', title: 'VARIABLE_STATE', width: '10%' ,align: 'center' },
+				{ field: 'NODE', title: 'NODE', width: '10%' ,align: 'center' },
+				{ field: 'BLOCK', title: 'BLOCK', width: '10%' ,align: 'center' },
+				{ field: 'GROUP1', title: 'GROUP1', width: '10%' ,align: 'center' },
+				{ field: 'GROUP2', title: 'GROUP2', width: '10%' ,align: 'center' },
+				{ field: 'DESCRIPTION', title: 'DESCRIPTION', width: '10%' ,align: 'center' },
+		    ]]
+		});
+
+		$('#dg').datagrid({
+		    // title: "测试本地分页",
+		    // rownumbers: true,
+		    fitColumns: true,
+		    scrollbarSize: 0, // 滚动条宽度设为0
+		    pagination: false,
+		    // data: data.slice(0, 10),
+		    data: data
+		});
+
+        $('#print').on('click', function() {
+            // $('.datagrid-view2 .datagrid-btable').css('page-break-inside', 'avoid');
+            $('table.datagrid-btable').css('page-break-inside', 'avoid');
+            $('.datagrid-view').print({
+				// iframe: false
+			});
+        });
+	</script>
+</body>
+</html>
